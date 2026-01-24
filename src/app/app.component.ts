@@ -1,14 +1,47 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { PlayersSetupComponent } from './components/players-setup/players-setup.component';
+import { ButtonModule } from 'primeng/button';
+import { GameLogicComponent } from './components/game-logic/game-logic.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    PlayersSetupComponent,
+    ButtonModule,
+    GameLogicComponent,
+    FormsModule,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.sass'
+  styleUrl: './app.component.sass',
 })
 export class AppComponent {
-  title = 'impostor-game';
+  title = 'Eyes OFF Games';
+  isGameStarted = false;
+  players: string[] = [];
+  playerName: string = '';
+  type = 0;
+
+  addPlayer() {
+    this.players.push(this.playerName);
+    this.playerName = '';
+  }
+
+  removePlayer(playerIndex: number) {
+    this.players.splice(playerIndex, 1);
+  }
+
+  receivePlayers(players: string[]) {
+    this.players = players;
+  }
+
+  startGame(type: number) {
+    this.type = type;
+    this.isGameStarted = true;
+  }
 }

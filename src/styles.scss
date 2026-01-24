@@ -1,0 +1,149 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  width: 100%;
+  background: radial-gradient(circle at top, #6e8caa, #cbd5ff);
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Wrapper geral */
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Conteúdo centralizado */
+.app-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Título */
+.game-title {
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #0f172a;
+}
+
+/* ===== Flip card ===== */
+
+.card-container {
+  perspective: 1200px;
+}
+
+.flip-card {
+  width: 380px;
+  height: 230px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+}
+
+.flip-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Frente */
+.flip-front {
+  background: linear-gradient(135deg, #334155, #020617);
+}
+
+/* Verso */
+.flip-back {
+  background: linear-gradient(135deg, #020617, #020617);
+  transform: rotateY(180deg);
+}
+
+/* Estados */
+.impostor {
+  border: 2px solid #ef4444;
+  color: #fecaca;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+}
+
+.normal {
+  border: 2px solid #22c55e;
+  color: #bbf7d0;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+}
+
+/* Badge jogadores */
+.player-badge {
+  background: linear-gradient(135deg, #0d6efd, #084298);
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.faction-btn {
+  background: linear-gradient(
+    90deg,
+    #2563eb 0%,
+    #2563eb 49%,
+    #e5e7eb 50%,
+    #dc2626 51%,
+    #dc2626 100%
+  );
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Linha divisória mais elegante */
+.faction-btn::after {
+  content: "";
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  left: 50%;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  transform: translateX(-50%);
+}
+
+/* Hover */
+.faction-btn:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+/* Disabled */
+.faction-btn:disabled {
+  background: linear-gradient(
+    90deg,
+    #94a3b8 0%,
+    #94a3b8 49%,
+    #cbd5e1 50%,
+    #94a3b8 51%,
+    #94a3b8 100%
+  );
+  color: #e5e7eb;
+  cursor: not-allowed;
+}
+
