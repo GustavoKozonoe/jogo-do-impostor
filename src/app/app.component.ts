@@ -20,7 +20,7 @@ import { GameType } from './interfaces/game-type.enum';
   styleUrl: './app.component.sass',
 })
 export class AppComponent {
-  title = 'Eyes OFF Games';
+  title = 'Jogo do Impostor';
   isGameStarted = false;
   players: string[] = [];
   playerName: string = '';
