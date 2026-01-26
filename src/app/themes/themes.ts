@@ -19,7 +19,6 @@ export const themes = [
   'Polvo',
   'Caranguejo',
   'Tartaruga',
-
   'Pizza',
   'Hambúrguer',
   'Lasanha',

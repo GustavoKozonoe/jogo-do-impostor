@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { PlayersSetupComponent } from './components/players-setup/players-setup.component';
 import { ButtonModule } from 'primeng/button';
 import { GameLogicComponent } from './components/game-logic/game-logic.component';
 import { FormsModule } from '@angular/forms';
+import { GameType } from './interfaces/game-type.enum';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterOutlet,
-    PlayersSetupComponent,
     ButtonModule,
     GameLogicComponent,
     FormsModule,
@@ -23,9 +22,17 @@ import { FormsModule } from '@angular/forms';
 export class AppComponent {
   title = 'Eyes OFF Games';
   isGameStarted = false;
-  players: string[] = [];
+  players: string[] = [
+    'Gustavo',
+    'Kozonoe',
+    'Maricato',
+    'Rodrigues',
+    'Felipe',
+    'Sanger',
+    'Weslley',
+  ];
   playerName: string = '';
-  type = 0;
+  type: GameType = GameType.None;
 
   addPlayer() {
     this.players.push(this.playerName);

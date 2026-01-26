@@ -1,109 +1,160 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { themes } from '../../themes/themes';
+import { GameType } from '../../interfaces/game-type.enum';
 
 @Component({
   selector: 'app-game-logic',
   standalone: true,
-  imports: [JsonPipe, CommonModule],
+  imports: [CommonModule],
   templateUrl: './game-logic.component.html',
   styleUrl: './game-logic.component.sass',
 })
 export class GameLogicComponent implements OnInit {
+  private audio = new Audio('assets/dry-fart.mp3');
   private themes = themes;
+  private themeDistribution: string[] = [];
+
   @Input() players: string[] = [];
-  @Input() type: number = 0;
-  usedThemes: string[] = [];
-  usedThemesString: string = '';
-  audio = new Audio('assets/dry-fart.mp3');
+  @Input() type: GameType = GameType.SingleTheme;
 
-  pickedTheme = '';
   pickedPlayer = '';
+  pickedTheme = '';
   pickedThemes: string[] = [];
-  show = false;
+
+  usedThemes: string[] = [];
+  usedThemesLabel = '';
+
   index = 0;
-  done = false;
-  notRevealedYet = true;
-  isFirst = true;
+  isDone = false;
+  isFirstPlayer = true;
+  isRevealed = false;
 
-  ngOnInit() {
-    this.pickGameType();
-    this.pickedPlayer = this.getRandomPlayer();
+  ngOnInit(): void {
+    this.startGame();
   }
 
-  pickGameType() {
-    if (this.type === 1) {
-      this.pickedTheme = this.getRandomTheme();
-    } else if (this.type === 2) {
-      this.pickedTheme = this.getRandomTheme();
-      this.pickedThemes.push(this.pickedTheme);
-      this.pickedThemes.push(this.getRandomTheme());
-    }
+  private buildBalancedThemeDistributionTwoFaction(): void {
+    const totalPlayersWithoutImpostor = this.players.length - 1;
+    const baseAmount = Math.floor(totalPlayersWithoutImpostor / 2);
+    const remainder = totalPlayersWithoutImpostor % 2;
+
+    this.themeDistribution = [];
+
+    this.pickedThemes.forEach((theme, index) => {
+      const amount = baseAmount + (index < remainder ? 1 : 0);
+
+      this.themeDistribution.push(...Array(amount).fill(theme));
+    });
+
+    this.shuffle(this.themeDistribution);
   }
 
-  next() {
-    if (this.type === 2) {
-      this.pickedTheme = this.getRandomThemeInTwoFactions();
+  next(): void {
+    if (this.type === GameType.TwoFactions) {
+      this.pickedTheme = this.getThemeForCurrentPlayer();
     }
-    this.index === this.players.length - 2
-      ? (this.done = true)
-      : (this.done = false);
+
     this.index++;
-    this.show = false;
-    this.notRevealedYet = true;
-    this.isFirst = this.index === 0;
+    this.isDone = this.index >= this.players.length - 1;
+    this.isFirstPlayer = this.index === 0;
+
+    this.resetViewState();
   }
 
-  previous() {
+  previous(): void {
+    if (this.index === 0) return;
+
     this.index--;
-    this.show = false;
-    this.notRevealedYet = true;
-    this.isFirst = this.index === 0;
+    this.isFirstPlayer = this.index === 0;
+
+    this.resetViewState();
   }
 
-  restart() {
-    this.setAlreadyUsedThemes();
-    this.pickGameType();
+  restart(): void {
+    this.updateUsedThemes();
+    this.startGame();
+  }
+
+  reveal(): void {
+    this.isRevealed = true;
+    this.playAudio();
+  }
+
+  hide(): void {
+    this.isRevealed = false;
+  }
+
+  private startGame(): void {
+    this.pickInitialThemes();
     this.pickedPlayer = this.getRandomPlayer();
-    this.show = false;
     this.index = 0;
-    this.done = false;
+    this.isDone = false;
+    this.isFirstPlayer = true;
+    this.resetViewState();
   }
 
-  setAlreadyUsedThemes() {
-    if (this.type === 1) {
-      this.themes = this.themes.filter((x) =>
-        this.pickedThemes.find((y) => y == x),
-      );
-      this.usedThemes.push(this.pickedTheme);
-    } else if (this.type === 2) {
-      this.usedThemes = this.usedThemes.concat(this.pickedThemes);
+  private pickInitialThemes(): void {
+    this.pickedThemes = [];
+
+    if (this.type === GameType.SingleTheme) {
+      this.pickedTheme = this.getRandomTheme();
+      return;
     }
 
-    this.pickedThemes = [];
-    this.usedThemesString = this.usedThemes.join(', ');
+    if (this.type === GameType.TwoFactions) {
+      this.pickedThemes = [this.getRandomTheme(), this.getRandomTheme()];
+      this.pickedTheme = this.pickedThemes[0];
+
+      this.buildBalancedThemeDistributionTwoFaction();
+    }
   }
 
-  reveal() {
-    this.notRevealedYet = false;
-    this.show = true;
+  private updateUsedThemes(): void {
+    if (this.type === GameType.SingleTheme) {
+      this.usedThemes.push(this.pickedTheme);
+      this.themes = this.themes.filter(
+        (theme) => !this.usedThemes.includes(theme),
+      );
+    }
+
+    if (this.type === GameType.TwoFactions) {
+      this.usedThemes.push(...this.pickedThemes);
+    }
+
+    this.usedThemesLabel = this.usedThemes.join(', ');
+    this.pickedThemes = [];
+  }
+
+  private shuffle<T>(array: T[]): void {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  private resetViewState(): void {
+    this.isRevealed = false;
+  }
+
+  private playAudio(): void {
     this.audio.currentTime = 0;
     this.audio.play();
   }
 
-  hide() {
-    this.show = false;
+  private getRandomPlayer(): string {
+    return this.getRandomItem(this.players);
   }
 
-  getRandomPlayer(): string {
-    return this.players[Math.floor(Math.random() * this.players.length)];
+  private getRandomTheme(): string {
+    return this.getRandomItem(this.themes);
   }
 
-  getRandomThemeInTwoFactions() {
-    return this.pickedThemes[Math.floor(Math.random() * 2)];
+  private getRandomItem<T>(list: T[]): T {
+    return list[Math.floor(Math.random() * list.length)];
   }
 
-  getRandomTheme(): string {
-    return this.themes[Math.floor(Math.random() * this.themes.length)];
+  private getThemeForCurrentPlayer(): string {
+    return this.themeDistribution[this.index];
   }
 }
