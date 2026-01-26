@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { themes } from '../../themes/themes';
 import { GameType } from '../../interfaces/game-type.enum';
 
@@ -10,7 +10,7 @@ import { GameType } from '../../interfaces/game-type.enum';
   templateUrl: './game-logic.component.html',
   styleUrl: './game-logic.component.sass',
 })
-export class GameLogicComponent implements OnInit {
+export class GameLogicComponent implements OnInit, OnDestroy {
   private audio = new Audio('assets/dry-fart.mp3');
   private themes = themes;
   private themeDistribution: string[] = [];
@@ -35,6 +35,11 @@ export class GameLogicComponent implements OnInit {
 
   ngOnInit(): void {
     this.startGame();
+    document.body.classList.add('no-scroll');
+  }
+
+  ngOnDestroy() {
+    document.body.classList.remove('no-scroll');
   }
 
   private buildBalancedThemeDistributionTwoFaction(): void {

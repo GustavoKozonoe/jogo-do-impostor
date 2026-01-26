@@ -18,6 +18,11 @@ body {
   flex-direction: column;
 }
 
+body.no-scroll {
+  overflow: hidden;
+  touch-action: none;
+}
+
 button,
 .btn {
   min-height: 44px;

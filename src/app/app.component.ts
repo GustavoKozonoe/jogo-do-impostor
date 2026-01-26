@@ -22,15 +22,7 @@ import { GameType } from './interfaces/game-type.enum';
 export class AppComponent {
   title = 'Eyes OFF Games';
   isGameStarted = false;
-  players: string[] = [
-    'Gustavo',
-    'Kozonoe',
-    'Maricato',
-    'Rodrigues',
-    'Felipe',
-    'Sanger',
-    'Weslley',
-  ];
+  players: string[] = [];
   playerName: string = '';
   type: GameType = GameType.None;
 
