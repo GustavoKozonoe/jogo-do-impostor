@@ -30,6 +30,9 @@ export class GameLogicComponent implements OnInit {
   isFirstPlayer = true;
   isRevealed = false;
 
+  touchStartY = 0;
+  touchEndY = 0;
+
   ngOnInit(): void {
     this.startGame();
   }
@@ -83,6 +86,30 @@ export class GameLogicComponent implements OnInit {
 
   hide(): void {
     this.isRevealed = false;
+  }
+
+  onTouchStart(event: TouchEvent) {
+    this.touchStartY = event.changedTouches[0].clientY;
+  }
+
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndY = event.changedTouches[0].clientY;
+    this.handleSwipe();
+  }
+
+  handleSwipe() {
+    const swipeDistance = this.touchStartY - this.touchEndY;
+    const minSwipe = 40; // sensibilidade
+
+    // Swipe para cima → revelar
+    if (swipeDistance > minSwipe && !this.isRevealed) {
+      this.reveal();
+    }
+
+    // Swipe para baixo → esconder
+    if (swipeDistance < -minSwipe && this.isRevealed) {
+      this.hide();
+    }
   }
 
   private startGame(): void {

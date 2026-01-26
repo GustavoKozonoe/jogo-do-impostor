@@ -1,15 +1,22 @@
 <div
   class="container-fluid d-flex flex-column justify-content-center align-items-center"
 >
+  <div class="swipe-hint" *ngIf="!isRevealed">⬆ Arraste para revelar</div>
+  <div class="swipe-hint" *ngIf="isRevealed">⬇ Arraste para esconder</div>
   <div class="card-container text-center">
-    <div class="flip-card" [class.flipped]="isRevealed">
+    <div
+      class="flip-card"
+      [class.flipped]="isRevealed"
+      (touchstart)="onTouchStart($event)"
+      (touchend)="onTouchEnd($event)"
+    >
       <div class="flip-face flip-front shadow-lg p-4">
         <div class="d-flex justify-content-between align-items-center">
           <strong class="text-light mx-2">
             {{ players[index] }}
           </strong>
 
-          <button class="btn btn-sm btn-outline-light mx-2" (click)="reveal()">
+          <button class="btn btn-sm btn-outline-light m-2" (click)="reveal()">
             👁️ Revelar
           </button>
         </div>
@@ -27,7 +34,7 @@
           <ng-template #theme> 🎯 {{ pickedTheme }} </ng-template>
         </h6>
 
-        <button class="btn btn-outline-light" (click)="hide()">
+        <button class="btn btn-outline-light m-0" (click)="hide()">
           🙈 Esconder
         </button>
       </div>

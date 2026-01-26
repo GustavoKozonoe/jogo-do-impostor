@@ -1,4 +1,9 @@
-html, body {
+/* ======================================================
+   Base / Reset
+====================================================== */
+
+html,
+body {
   height: 100%;
 }
 
@@ -13,44 +18,63 @@ body {
   flex-direction: column;
 }
 
-/* Wrapper geral */
+button,
+.btn {
+  min-height: 44px;
+}
+
+/* ======================================================
+   Layout Global
+====================================================== */
+
 .app-wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Conteúdo centralizado */
 .app-content {
   flex: 1;
   display: flex;
   align-items: center;
 }
 
-/* Título */
+/* ======================================================
+   Tipografia
+====================================================== */
+
 .game-title {
   font-family: 'Orbitron', sans-serif;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #0f172a;
+  font-size: 2rem;
 }
 
-/* ===== Flip card ===== */
+/* ======================================================
+   Flip Card
+====================================================== */
 
 .card-container {
   perspective: 1200px;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
 }
 
 .flip-card {
-  width: 380px;
-  height: 230px;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 200px;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.8s ease;
-}
+  will-change: transform;
+  touch-action: pan-y;
 
-.flip-card.flipped {
-  transform: rotateY(180deg);
+  &.flipped {
+    transform: rotateY(180deg);
+  }
 }
 
 .flip-face {
@@ -61,23 +85,30 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
   text-align: center;
+  font-size: 1.4rem;
   padding: 1rem;
 }
 
-/* Frente */
 .flip-front {
   background: linear-gradient(135deg, #334155, #020617);
 }
 
-/* Verso */
 .flip-back {
   background: linear-gradient(135deg, #020617, #020617);
   transform: rotateY(180deg);
 }
 
-/* Estados */
+.flip-front button,
+.flip-back button {
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* ======================================================
+   Estados do Jogo
+====================================================== */
+
 .impostor {
   border: 2px solid #ef4444;
   color: #fecaca;
@@ -90,7 +121,20 @@ body {
   box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
 }
 
-/* Badge jogadores */
+/* ======================================================
+   Indicadores / UX
+====================================================== */
+
+.swipe-hint {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin-top: 8px;
+}
+
+/* ======================================================
+   Badges
+====================================================== */
+
 .player-badge {
   background: linear-gradient(135deg, #0d6efd, #084298);
   color: #fff;
@@ -99,6 +143,10 @@ body {
   border-radius: 999px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
+
+/* ======================================================
+   Botão Facções
+====================================================== */
 
 .faction-btn {
   background: linear-gradient(
@@ -114,36 +162,76 @@ body {
   font-weight: 600;
   position: relative;
   overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 15%;
+    bottom: 15%;
+    left: 50%;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.6);
+    transform: translateX(-50%);
+  }
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.1);
+  }
+
+  &:disabled {
+    background: linear-gradient(
+      90deg,
+      #94a3b8 0%,
+      #94a3b8 49%,
+      #cbd5e1 50%,
+      #94a3b8 51%,
+      #94a3b8 100%
+    );
+    color: #e5e7eb;
+    cursor: not-allowed;
+  }
 }
 
-/* Linha divisória mais elegante */
-.faction-btn::after {
-  content: "";
-  position: absolute;
-  top: 15%;
-  bottom: 15%;
-  left: 50%;
-  width: 2px;
-  background: rgba(255, 255, 255, 0.6);
-  transform: translateX(-50%);
+/* ======================================================
+   Responsividade
+====================================================== */
+
+@media (max-width: 576px) {
+  .game-title {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
+
+  .app-content {
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
 }
 
-/* Hover */
-.faction-btn:hover:not(:disabled) {
-  filter: brightness(1.1);
+@media (max-width: 480px) {
+  .flip-face {
+    font-size: 1.05rem;
+    padding: 0.8rem;
+  }
+
+  .player-badge {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
 }
 
-/* Disabled */
-.faction-btn:disabled {
-  background: linear-gradient(
-    90deg,
-    #94a3b8 0%,
-    #94a3b8 49%,
-    #cbd5e1 50%,
-    #94a3b8 51%,
-    #94a3b8 100%
-  );
-  color: #e5e7eb;
-  cursor: not-allowed;
+@media (max-width: 360px) {
+  .flip-face {
+    font-size: 0.95rem;
+  }
 }
 
+.swipe-hint {
+  display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .swipe-hint {
+    display: block;
+  }
+}
