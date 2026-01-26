@@ -1,7 +1,7 @@
 <div class="app-wrapper">
   <h1 class="game-title text-center mt-3">{{ title }}</h1>
 
-  <div class="d-flex justify-content-center my-1">
+  <div *ngIf="!isGameStarted" class="d-flex justify-content-center my-1">
     <img draggable="false" src="assets/spy-agent.png" class="menu-icon" />
   </div>
 
