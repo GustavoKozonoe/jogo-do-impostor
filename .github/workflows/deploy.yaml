@@ -22,7 +22,6 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        working-directory: jogo-do-impostor
         run: npm ci
 
       - name: Build Angular app
