@@ -17,7 +17,8 @@
           </strong>
 
           <button class="btn btn-sm btn-outline-light m-2" (click)="reveal()">
-            👁️ Revelar
+            <img src="assets/icons/eye.png" class="icon" />
+            Revelar
           </button>
         </div>
       </div>
@@ -26,16 +27,20 @@
         class="flip-face flip-back shadow-lg p-4"
         [ngClass]="players[index] === pickedPlayer ? 'impostor' : 'normal'"
       >
-        <h6 class="my-0 mx-2">
+        <h6
+          class="my-0 mx-2 d-flex align-items-center justify-content-center gap-2"
+        >
           <ng-container *ngIf="players[index] === pickedPlayer; else theme">
-            😈 VOCÊ É O IMPOSTOR
+            <img src="assets/icons/impostor.png" class="icon-lg" />
+            <span>VOCÊ É O IMPOSTOR</span>
           </ng-container>
 
           <ng-template #theme> 🎯 {{ pickedTheme }} </ng-template>
         </h6>
 
         <button class="btn btn-outline-light m-0" (click)="hide()">
-          🙈 Esconder
+          <img src="assets/icons/hide.png" class="icon" />
+          Esconder
         </button>
       </div>
     </div>
