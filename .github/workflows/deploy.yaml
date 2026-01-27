@@ -19,10 +19,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 18
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Deploy
-        run: npm run deploy
+      - name: Build Angular app
+        run: npx ng build impostor-game --configuration production
+
+      - name: Deploy to GitHub Pages
+        run: npx angular-cli-ghpages --dir=dist/impostor-game/browser
