@@ -27,5 +27,10 @@ jobs:
       - name: Build Angular app
         run: npx ng build impostor-game --configuration production
 
+      - name: Configure git user
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
       - name: Deploy to GitHub Pages
         run: npx angular-cli-ghpages --dir=dist/impostor-game/browser
