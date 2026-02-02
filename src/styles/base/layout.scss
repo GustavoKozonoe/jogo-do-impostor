@@ -1,0 +1,19 @@
+.app-wrapper {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 576px) {
+  .app-content {
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+}

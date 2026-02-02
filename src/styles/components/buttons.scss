@@ -1,0 +1,35 @@
+.faction-btn {
+  background: linear-gradient(
+    90deg,
+    #2563eb 0%,
+    #2563eb 49%,
+    #e5e7eb 50%,
+    #dc2626 51%,
+    #dc2626 100%
+  );
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 15%;
+    bottom: 15%;
+    left: 50%;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.6);
+    transform: translateX(-50%);
+  }
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.1);
+  }
+
+  &:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+  }
+}

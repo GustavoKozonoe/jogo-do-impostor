@@ -1,0 +1,13 @@
+.swipe-hint {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin-top: 8px;
+  display: none;
+}
+
+/* Só aparece em mobile / touch */
+@media (hover: none) and (pointer: coarse) {
+  .swipe-hint {
+    display: block;
+  }
+}

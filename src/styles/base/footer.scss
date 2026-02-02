@@ -1,0 +1,20 @@
+.credits-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #ccc;
+  text-align: center;
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  z-index: 1000;
+}
+
+.credits-bar a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.credits-bar a:hover {
+  color: #ffd54f;
+}

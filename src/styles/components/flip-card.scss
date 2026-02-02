@@ -1,0 +1,72 @@
+.card-container {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.flip-card {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 200px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+  will-change: transform;
+  touch-action: pan-y;
+
+  &.flipped {
+    transform: rotateY(180deg);
+  }
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  // justify-content: space-between;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.4rem;
+}
+
+.flip-front, .flip-back {
+  color: #f8fafc;
+}
+
+.flip-front {
+  background: linear-gradient(135deg, #1e293b, #020617);
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background: radial-gradient(circle at center, #020617 0%, #000 80%);
+}
+
+@media (max-width: 480px) {
+  .flip-face {
+    font-size: 1.05rem;
+    padding: 0.8rem;
+  }
+
+  .player-badge {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .flip-face {
+    font-size: 0.95rem;
+  }
+}
