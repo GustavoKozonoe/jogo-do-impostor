@@ -56,12 +56,30 @@
               class="px-5 rounded-pill faction-btn"
             ></button>
           </div>
+
+          <div class="d-flex justify-content-center mt-4">
+            <button
+              *ngIf="!isGameStarted"
+              (click)="startGame(3)"
+              [disabled]="players.length <= 2"
+              pButton
+              severity="primary"
+              label="Ito"
+              class="px-5 rounded-pill"
+            ></button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <app-game-logic *ngIf="isGameStarted" [type]="type" [players]="players">
+  <app-game-logic
+    *ngIf="isGameStarted && (type === 1 || type === 2)"
+    [type]="type"
+    [players]="players"
+  >
   </app-game-logic>
+
+  <app-ito *ngIf="isGameStarted && type === 3" [players]="players"></app-ito>
 </div>
 
 <footer class="credits-bar">

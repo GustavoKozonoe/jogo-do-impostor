@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { GameLogicComponent } from './components/game-logic/game-logic.component';
 import { FormsModule } from '@angular/forms';
 import { GameType } from './interfaces/game-type.enum';
+import { ItoComponent } from './games/ito/ito.component';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { GameType } from './interfaces/game-type.enum';
     ButtonModule,
     GameLogicComponent,
     FormsModule,
+    ItoComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass',
@@ -41,6 +43,9 @@ export class AppComponent {
 
   startGame(type: number) {
     this.type = type;
+    if (type == GameType.Ito) {
+      this.title = 'ITO';
+    }
     this.isGameStarted = true;
   }
 }

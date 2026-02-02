@@ -1,0 +1,87 @@
+<div class="ito-game">
+  <div
+    class="container-fluid ito-container d-flex flex-column justify-content-center align-items-center"
+  >
+    <div class="active-theme mb-3 text-light">
+      🎯 Tema atual:
+      <strong>{{ pickedTheme }}</strong>
+    </div>
+
+    <div class="swipe-hint" *ngIf="!isRevealed">⬆ Arraste para revelar</div>
+    <div class="swipe-hint" *ngIf="isRevealed">⬇ Arraste para esconder</div>
+
+    <div class="card-container text-center">
+      <div
+        class="flip-card"
+        [class.flipped]="isRevealed"
+        (touchstart)="onTouchStart($event)"
+        (touchend)="onTouchEnd($event)"
+      >
+        <div class="flip-face flip-front shadow-lg p-4 justify-content-around">
+          <h2 class="player-name">
+            {{ currentPlayer?.player }}
+          </h2>
+
+          <button class="btn btn-primary w-50 m-0" (click)="reveal()">
+            Revelar número
+          </button>
+        </div>
+
+        <div class="flip-face flip-back shadow-lg p-4">
+          <div
+            class="ito-number"
+            [ngClass]="getItoColorClass(currentPlayer?.itoNumber)"
+          >
+            {{ currentPlayer?.itoNumber }}
+          </div>
+
+          <button class="btn btn-outline-light" (click)="hide()">
+            Esconder
+          </button>
+        </div>
+      </div>
+
+      <div class="controls mt-4">
+        <small class="progress-label d-block mb-2">
+          Jogador {{ index + 1 }} de {{ players.length }}
+        </small>
+
+        <div class="row justify-content-around">
+          <button
+            class="btn btn-light col-5"
+            (click)="previous()"
+            [disabled]="isFirstPlayer || isDone"
+          >
+            ⬅ Anterior
+          </button>
+
+          <button
+            class="btn btn-primary col-5"
+            (click)="next()"
+            [disabled]="isRevealed || isDone"
+          >
+            Próximo ➡
+          </button>
+        </div>
+
+        <button
+          *ngIf="isDone"
+          class="btn btn-danger w-100 mt-3"
+          (click)="restart()"
+        >
+          Reiniciar jogo
+        </button>
+      </div>
+    </div>
+
+    <div class="used-themes mt-4" *ngIf="usedThemes.length">
+      <small class="text-muted d-block mb-2"> Temas já utilizados </small>
+
+      <div class="themes-list">
+        <span *ngFor="let theme of usedThemes" class="theme-chip">
+          {{ theme }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
