@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { themes } from '../../themes/themes';
+import { impostorThemes } from '../../themes/impostorThemes';
 import { GameType } from '../../interfaces/game-type.enum';
 
 @Component({
@@ -12,7 +12,7 @@ import { GameType } from '../../interfaces/game-type.enum';
 })
 export class GameLogicComponent implements OnInit, OnDestroy {
   private audio = new Audio('assets/dry-fart.mp3');
-  private themes = themes;
+  private themes = impostorThemes;
   private themeDistribution: string[] = [];
 
   @Input() players: string[] = [];

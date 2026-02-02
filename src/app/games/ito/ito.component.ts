@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { themes } from '../../themes/themes';
+import { impostorThemes } from '../../themes/impostorThemes';
 import { ItoPlayer } from '../../interfaces/ito-player.interface';
+import { itoThemes } from '../../themes/itoThemes';
 
 @Component({
   selector: 'app-ito',
@@ -12,7 +13,7 @@ import { ItoPlayer } from '../../interfaces/ito-player.interface';
 export class ItoComponent implements OnInit {
   @Input({ required: true }) players: string[] = [];
 
-  private availableThemes = [...themes];
+  private availableThemes = [...itoThemes];
 
   playersDict: ItoPlayer[] = [];
 
