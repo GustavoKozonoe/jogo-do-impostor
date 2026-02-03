@@ -47,28 +47,12 @@ export class ImpostorGameComponent implements OnInit, OnDestroy {
     document.body.classList.add('no-scroll');
   }
 
-  get isImpostor(): boolean {
-    return this.players[this.index] === this.pickedPlayer;
-  }
-
   ngOnDestroy() {
     document.body.classList.remove('no-scroll');
   }
 
-  private buildBalancedThemeDistributionTwoFaction(): void {
-    const totalPlayersWithoutImpostor = this.players.length - 1;
-    const baseAmount = Math.floor(totalPlayersWithoutImpostor / 2);
-    const remainder = totalPlayersWithoutImpostor % 2;
-
-    this.themeDistribution = [];
-
-    this.pickedThemes.forEach((theme, index) => {
-      const amount = baseAmount + (index < remainder ? 1 : 0);
-
-      this.themeDistribution.push(...Array(amount).fill(theme));
-    });
-
-    this.shuffle(this.themeDistribution);
+  get isImpostor(): boolean {
+    return this.players[this.index] === this.pickedPlayer;
   }
 
   previousPlayer(): void {
@@ -104,30 +88,6 @@ export class ImpostorGameComponent implements OnInit, OnDestroy {
 
   hide(): void {
     this.isRevealed = false;
-  }
-
-  onTouchStart(event: TouchEvent) {
-    this.touchStartY = event.changedTouches[0].clientY;
-  }
-
-  onTouchEnd(event: TouchEvent) {
-    this.touchEndY = event.changedTouches[0].clientY;
-    this.handleSwipe();
-  }
-
-  handleSwipe() {
-    const swipeDistance = this.touchStartY - this.touchEndY;
-    const minSwipe = 40;
-
-    // Swipe para cima → revelar
-    if (swipeDistance > minSwipe && !this.isRevealed) {
-      this.reveal();
-    }
-
-    // Swipe para baixo → esconder
-    if (swipeDistance < -minSwipe && this.isRevealed) {
-      this.hide();
-    }
   }
 
   private startGame(): void {
@@ -201,5 +161,21 @@ export class ImpostorGameComponent implements OnInit, OnDestroy {
 
   private getThemeForCurrentPlayer(): string {
     return this.themeDistribution[this.index];
+  }
+
+  private buildBalancedThemeDistributionTwoFaction(): void {
+    const totalPlayersWithoutImpostor = this.players.length - 1;
+    const baseAmount = Math.floor(totalPlayersWithoutImpostor / 2);
+    const remainder = totalPlayersWithoutImpostor % 2;
+
+    this.themeDistribution = [];
+
+    this.pickedThemes.forEach((theme, index) => {
+      const amount = baseAmount + (index < remainder ? 1 : 0);
+
+      this.themeDistribution.push(...Array(amount).fill(theme));
+    });
+
+    this.shuffle(this.themeDistribution);
   }
 }

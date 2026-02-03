@@ -1,14 +1,9 @@
 <div class="ito-game">
   <div
-    class="container-fluid ito-container d-flex flex-column justify-content-center align-items-center"
+    class="game-wrapper container-fluid ito-container d-flex flex-column justify-content-center align-items-center"
+    [class.fade-out]="isEnding"
+    *ngIf="!showRanking"
   >
-    <div class="active-theme mb-3 text-light">
-      🎯 Tema atual:
-      <strong>{{ pickedTheme }}</strong>
-    </div>
-
-    <app-game-swipe-reveal [isRevealed]="isRevealed"></app-game-swipe-reveal>
-
     <div class="card-container text-center">
       <app-game-flip-card
         [isRevealed]="isRevealed"
@@ -24,10 +19,7 @@
         </ng-container>
 
         <ng-container back>
-          <div
-            class="ito-number"
-            [ngClass]="getItoColorClass(currentPlayer?.itoNumber)"
-          >
+          <div class="ito-number" [ngClass]="getItoColorClass">
             {{ currentPlayer?.itoNumber }}
           </div>
 
@@ -36,6 +28,14 @@
           </button>
         </ng-container>
       </app-game-flip-card>
+
+      <button
+        *ngIf="isDone && !showRanking"
+        class="btn btn-success mt-3"
+        (click)="showFinalRanking()"
+      >
+        🏆 Mostrar ranking final
+      </button>
 
       <app-game-controls
         [isDone]="isDone"
@@ -51,4 +51,10 @@
 
     <app-game-used-themes [usedThemes]="usedThemes"></app-game-used-themes>
   </div>
+
+  <app-ito-ranking-reveal
+    *ngIf="showRanking"
+    [players]="sortedPlayers"
+    (restart)="restartGame()"
+  ></app-ito-ranking-reveal>
 </div>

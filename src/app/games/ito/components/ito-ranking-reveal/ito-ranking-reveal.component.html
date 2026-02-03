@@ -1,0 +1,21 @@
+<div class="ito-ranking">
+  <h2 class="mb-4">🏆 Ordem final</h2>
+
+  <div
+    *ngFor="let player of visiblePlayers; let i = index"
+    class="ranking-item"
+    [style.animationDelay.ms]="i * 100"
+  >
+    <span class="position">#{{ i + 1 }}</span>
+    <span class="name">{{ player.player }}</span>
+    <span class="number">{{ player.itoNumber }}</span>
+  </div>
+</div>
+
+<button
+  *ngIf="visiblePlayers.length > 0"
+  (click)="restart.emit()"
+  class="btn btn-danger w-100 mt-3"
+>
+  Reiniciar jogo
+</button>

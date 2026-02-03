@@ -6,6 +6,7 @@ import { GameControlsComponent } from '../../shared/components/game-controls/gam
 import { GameUsedThemesComponent } from '../../shared/components/game-used-themes/game-used-themes.component';
 import { GameSwipeRevealComponent } from '../../shared/components/game-swipe-reveal/game-swipe-reveal.component';
 import { GameFlipCardComponent } from '../../shared/components/game-flip-card/game-flip-card.component';
+import { ItoRankingRevealComponent } from './components/ito-ranking-reveal/ito-ranking-reveal.component';
 
 @Component({
   selector: 'app-ito',
@@ -16,6 +17,7 @@ import { GameFlipCardComponent } from '../../shared/components/game-flip-card/ga
     GameUsedThemesComponent,
     GameSwipeRevealComponent,
     GameFlipCardComponent,
+    ItoRankingRevealComponent,
   ],
   templateUrl: './ito.component.html',
 })
@@ -33,8 +35,13 @@ export class ItoComponent implements OnInit {
   index = 0;
   isRevealed = false;
 
-  private touchStartY = 0;
-  private touchEndY = 0;
+  showRanking = false;
+  isEnding = false;
+  sortedPlayers: ItoPlayer[] = [];
+
+  ngOnInit(): void {
+    this.startGame();
+  }
 
   get currentPlayer(): ItoPlayer | undefined {
     return this.playersDict[this.index];
@@ -48,8 +55,15 @@ export class ItoComponent implements OnInit {
     return this.index >= this.playersDict.length - 1;
   }
 
-  ngOnInit(): void {
-    this.startGame();
+  get getItoColorClass(): string {
+    if (this.currentPlayer === undefined || this.currentPlayer === null)
+      return '';
+
+    if (this.currentPlayer.itoNumber <= 20) return 'ito-low';
+    if (this.currentPlayer.itoNumber <= 40) return 'ito-mid-low';
+    if (this.currentPlayer.itoNumber <= 60) return 'ito-mid';
+    if (this.currentPlayer.itoNumber <= 80) return 'ito-mid-high';
+    return 'ito-high';
   }
 
   nextPlayer(): void {
@@ -79,37 +93,24 @@ export class ItoComponent implements OnInit {
     this.isRevealed = false;
   }
 
-  onTouchStart(event: TouchEvent): void {
-    this.touchStartY = event.changedTouches[0].clientY;
-  }
+  showFinalRanking(): void {
+    this.sortedPlayers = [...this.playersDict].sort(
+      (a, b) => a.itoNumber - b.itoNumber,
+    );
 
-  onTouchEnd(event: TouchEvent): void {
-    this.touchEndY = event.changedTouches[0].clientY;
-    this.handleSwipe();
-  }
+    this.isEnding = true; // começa o fade-out
 
-  getItoColorClass(value?: number): string {
-    if (value === undefined || value === null) return '';
-
-    if (value <= 20) return 'ito-low';
-    if (value <= 40) return 'ito-mid-low';
-    if (value <= 60) return 'ito-mid';
-    if (value <= 80) return 'ito-mid-high';
-    return 'ito-high';
-  }
-
-  private handleSwipe(): void {
-    const distance = this.touchStartY - this.touchEndY;
-    const threshold = 40;
-
-    if (distance > threshold && !this.isRevealed) this.reveal();
-    if (distance < -threshold && this.isRevealed) this.hide();
+    setTimeout(() => {
+      this.showRanking = true; // ranking entra após 300ms
+    }, 300);
   }
 
   private startGame(): void {
     this.setupPlayers();
     this.index = 0;
     this.isRevealed = false;
+    this.showRanking = false;
+    this.isEnding = false;
     this.pickedTheme = this.pickRandom(this.availableThemes);
   }
 
