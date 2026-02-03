@@ -4,6 +4,11 @@
     [class.fade-out]="isEnding"
     *ngIf="!showRanking"
   >
+    <div class="active-theme mb-3 text-light">
+      🎯 Tema atual:
+      <strong>{{ pickedTheme }}</strong>
+    </div>
+
     <div class="card-container text-center">
       <app-game-flip-card
         [isRevealed]="isRevealed"
