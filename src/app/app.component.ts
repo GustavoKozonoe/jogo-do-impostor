@@ -24,7 +24,7 @@ import { ImpostorGameComponent } from './games/impostor-game/impostor-game.compo
 export class AppComponent {
   title = 'Jogo do Impostor';
   isGameStarted = false;
-  players: string[] = ['teste1', 'teste2', 'teste3'];
+  players: string[] = [];
   playerName: string = '';
   type: GameType = GameType.None;
 
