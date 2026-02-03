@@ -1,0 +1,57 @@
+<!-- <div class="mt-4">
+  <div class="row justify-content-around">
+    <button
+      *ngIf="!isDone"
+      class="btn btn-warning col-5"
+      (click)="previous.emit()"
+      [disabled]="isFirstPlayer"
+    >
+      Jogador Anterior
+    </button>
+
+    <button
+      *ngIf="!isDone"
+      class="btn btn-primary col-5"
+      (click)="next.emit()"
+      [disabled]="isRevealed"
+    >
+      Próximo Jogador
+    </button>
+  </div>
+
+  <button *ngIf="isDone" class="btn btn-danger w-100" (click)="restart.emit()">
+    Reiniciar jogo
+  </button>
+</div> -->
+
+<div class="controls mt-4">
+  <small class="progress-label d-block mb-2">
+    Jogador {{ index + 1 }} de {{ players.length }}
+  </small>
+
+  <div class="row justify-content-around">
+    <button
+      class="btn btn-light col-5"
+      (click)="previous.emit()"
+      [disabled]="isFirstPlayer || isDone"
+    >
+      ⬅ Anterior
+    </button>
+
+    <button
+      class="btn btn-primary col-5"
+      (click)="next.emit()"
+      [disabled]="isRevealed || isDone"
+    >
+      Próximo ➡
+    </button>
+  </div>
+
+  <button
+    *ngIf="isDone"
+    class="btn btn-danger w-100 mt-3"
+    (click)="restart.emit()"
+  >
+    Reiniciar jogo
+  </button>
+</div>

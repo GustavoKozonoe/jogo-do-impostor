@@ -1,0 +1,47 @@
+<div
+  class="container-fluid d-flex flex-column justify-content-center align-items-center"
+>
+  <app-game-swipe-reveal [isRevealed]="isRevealed"></app-game-swipe-reveal>
+  <div class="card-container text-center">
+    <app-game-flip-card
+      [isRevealed]="isRevealed"
+      [backClass]="isImpostor ? 'impostor' : 'normal'"
+      (reveal)="reveal()"
+      (hide)="hide()"
+    >
+      <ng-container front>
+        <div class="d-flex justify-content-between align-items-center">
+          <strong>{{ players[index] }}</strong>
+
+          <button class="btn btn-sm btn-outline-light m-2" (click)="reveal()">
+            <img src="assets/icons/eye.png" class="icon" />
+            Revelar
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-container back>
+        <h6 *ngIf="players[index] === pickedPlayer; else theme">
+          VOCÊ É O IMPOSTOR
+        </h6>
+
+        <ng-template #theme> 🎯 {{ pickedTheme }} </ng-template>
+
+        <button class="btn btn-outline-light" (click)="hide()">Esconder</button>
+      </ng-container>
+    </app-game-flip-card>
+
+    <app-game-controls
+      [isDone]="isDone"
+      [isFirstPlayer]="isFirstPlayer"
+      [isRevealed]="isRevealed"
+      [index]="index"
+      [players]="players"
+      (previous)="previousPlayer()"
+      (next)="nextPlayer()"
+      (restart)="restartGame()"
+    ></app-game-controls>
+  </div>
+
+  <app-game-used-themes [usedThemes]="usedThemes"></app-game-used-themes>
+</div>

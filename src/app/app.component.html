@@ -72,12 +72,12 @@
       </div>
     </div>
   </div>
-  <app-game-logic
+  <app-impostor-game
     *ngIf="isGameStarted && (type === 1 || type === 2)"
     [type]="type"
     [players]="players"
   >
-  </app-game-logic>
+  </app-impostor-game>
 
   <app-ito *ngIf="isGameStarted && type === 3" [players]="players"></app-ito>
 </div>

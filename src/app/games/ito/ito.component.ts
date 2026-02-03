@@ -1,13 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { impostorThemes } from '../../themes/impostorThemes';
 import { ItoPlayer } from '../../interfaces/ito-player.interface';
-import { itoThemes } from '../../themes/itoThemes';
+import { itoThemes } from '../../shared/themes/itoThemes';
+import { GameControlsComponent } from '../../shared/components/game-controls/game-controls.component';
+import { GameUsedThemesComponent } from '../../shared/components/game-used-themes/game-used-themes.component';
+import { GameSwipeRevealComponent } from '../../shared/components/game-swipe-reveal/game-swipe-reveal.component';
+import { GameFlipCardComponent } from '../../shared/components/game-flip-card/game-flip-card.component';
 
 @Component({
   selector: 'app-ito',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    GameControlsComponent,
+    GameUsedThemesComponent,
+    GameSwipeRevealComponent,
+    GameFlipCardComponent,
+  ],
   templateUrl: './ito.component.html',
 })
 export class ItoComponent implements OnInit {
@@ -43,21 +52,21 @@ export class ItoComponent implements OnInit {
     this.startGame();
   }
 
-  next(): void {
+  nextPlayer(): void {
     if (this.isDone || this.isRevealed) return;
 
     this.index++;
     this.resetViewState();
   }
 
-  previous(): void {
+  previousPlayer(): void {
     if (this.isFirstPlayer) return;
 
     this.index--;
     this.resetViewState();
   }
 
-  restart(): void {
+  restartGame(): void {
     this.registerUsedTheme();
     this.startGame();
   }

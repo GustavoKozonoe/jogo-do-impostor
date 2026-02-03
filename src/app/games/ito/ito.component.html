@@ -7,27 +7,23 @@
       <strong>{{ pickedTheme }}</strong>
     </div>
 
-    <div class="swipe-hint" *ngIf="!isRevealed">⬆ Arraste para revelar</div>
-    <div class="swipe-hint" *ngIf="isRevealed">⬇ Arraste para esconder</div>
+    <app-game-swipe-reveal [isRevealed]="isRevealed"></app-game-swipe-reveal>
 
     <div class="card-container text-center">
-      <div
-        class="flip-card"
-        [class.flipped]="isRevealed"
-        (touchstart)="onTouchStart($event)"
-        (touchend)="onTouchEnd($event)"
+      <app-game-flip-card
+        [isRevealed]="isRevealed"
+        (reveal)="reveal()"
+        (hide)="hide()"
       >
-        <div class="flip-face flip-front shadow-lg p-4 justify-content-around">
-          <h2 class="player-name">
-            {{ currentPlayer?.player }}
-          </h2>
+        <ng-container front>
+          <h2>{{ currentPlayer?.player }}</h2>
 
-          <button class="btn btn-primary w-50 m-0" (click)="reveal()">
+          <button class="btn btn-primary" (click)="reveal()">
             Revelar número
           </button>
-        </div>
+        </ng-container>
 
-        <div class="flip-face flip-back shadow-lg p-4">
+        <ng-container back>
           <div
             class="ito-number"
             [ngClass]="getItoColorClass(currentPlayer?.itoNumber)"
@@ -38,50 +34,21 @@
           <button class="btn btn-outline-light" (click)="hide()">
             Esconder
           </button>
-        </div>
-      </div>
+        </ng-container>
+      </app-game-flip-card>
 
-      <div class="controls mt-4">
-        <small class="progress-label d-block mb-2">
-          Jogador {{ index + 1 }} de {{ players.length }}
-        </small>
-
-        <div class="row justify-content-around">
-          <button
-            class="btn btn-light col-5"
-            (click)="previous()"
-            [disabled]="isFirstPlayer || isDone"
-          >
-            ⬅ Anterior
-          </button>
-
-          <button
-            class="btn btn-primary col-5"
-            (click)="next()"
-            [disabled]="isRevealed || isDone"
-          >
-            Próximo ➡
-          </button>
-        </div>
-
-        <button
-          *ngIf="isDone"
-          class="btn btn-danger w-100 mt-3"
-          (click)="restart()"
-        >
-          Reiniciar jogo
-        </button>
-      </div>
+      <app-game-controls
+        [isDone]="isDone"
+        [isFirstPlayer]="isFirstPlayer"
+        [isRevealed]="isRevealed"
+        [index]="index"
+        [players]="players"
+        (previous)="previousPlayer()"
+        (next)="nextPlayer()"
+        (restart)="restartGame()"
+      ></app-game-controls>
     </div>
 
-    <div class="used-themes mt-4" *ngIf="usedThemes.length">
-      <small class="text-muted d-block mb-2"> Temas já utilizados </small>
-
-      <div class="themes-list">
-        <span *ngFor="let theme of usedThemes" class="theme-chip">
-          {{ theme }}
-        </span>
-      </div>
-    </div>
+    <app-game-used-themes [usedThemes]="usedThemes"></app-game-used-themes>
   </div>
 </div>

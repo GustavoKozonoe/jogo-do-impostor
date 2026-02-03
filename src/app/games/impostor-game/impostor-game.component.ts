@@ -1,16 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { impostorThemes } from '../../themes/impostorThemes';
+import { GameControlsComponent } from '../../shared/components/game-controls/game-controls.component';
+import { GameFlipCardComponent } from '../../shared/components/game-flip-card/game-flip-card.component';
+import { GameSwipeRevealComponent } from '../../shared/components/game-swipe-reveal/game-swipe-reveal.component';
+import { GameUsedThemesComponent } from '../../shared/components/game-used-themes/game-used-themes.component';
 import { GameType } from '../../interfaces/game-type.enum';
+import { impostorThemes } from '../../shared/themes/impostorThemes';
 
 @Component({
-  selector: 'app-game-logic',
+  selector: 'app-impostor-game',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './game-logic.component.html',
-  styleUrl: './game-logic.component.sass',
+  imports: [
+    CommonModule,
+    GameControlsComponent,
+    GameUsedThemesComponent,
+    GameSwipeRevealComponent,
+    GameFlipCardComponent,
+  ],
+  templateUrl: './impostor-game.component.html',
 })
-export class GameLogicComponent implements OnInit, OnDestroy {
+export class ImpostorGameComponent implements OnInit, OnDestroy {
   private audio = new Audio('assets/dry-fart.mp3');
   private themes = impostorThemes;
   private themeDistribution: string[] = [];
@@ -38,6 +47,10 @@ export class GameLogicComponent implements OnInit, OnDestroy {
     document.body.classList.add('no-scroll');
   }
 
+  get isImpostor(): boolean {
+    return this.players[this.index] === this.pickedPlayer;
+  }
+
   ngOnDestroy() {
     document.body.classList.remove('no-scroll');
   }
@@ -58,7 +71,16 @@ export class GameLogicComponent implements OnInit, OnDestroy {
     this.shuffle(this.themeDistribution);
   }
 
-  next(): void {
+  previousPlayer(): void {
+    if (this.index === 0) return;
+
+    this.index--;
+    this.isFirstPlayer = this.index === 0;
+
+    this.resetViewState();
+  }
+
+  nextPlayer(): void {
     if (this.type === GameType.TwoFactions) {
       this.pickedTheme = this.getThemeForCurrentPlayer();
     }
@@ -70,16 +92,7 @@ export class GameLogicComponent implements OnInit, OnDestroy {
     this.resetViewState();
   }
 
-  previous(): void {
-    if (this.index === 0) return;
-
-    this.index--;
-    this.isFirstPlayer = this.index === 0;
-
-    this.resetViewState();
-  }
-
-  restart(): void {
+  restartGame(): void {
     this.updateUsedThemes();
     this.startGame();
   }
@@ -104,7 +117,7 @@ export class GameLogicComponent implements OnInit, OnDestroy {
 
   handleSwipe() {
     const swipeDistance = this.touchStartY - this.touchEndY;
-    const minSwipe = 40; // sensibilidade
+    const minSwipe = 40;
 
     // Swipe para cima → revelar
     if (swipeDistance > minSwipe && !this.isRevealed) {

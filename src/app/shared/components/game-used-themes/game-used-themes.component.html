@@ -1,0 +1,9 @@
+<div class="used-themes mt-4" *ngIf="usedThemes.length">
+  <small class="text-muted d-block mb-2"> Temas já utilizados </small>
+
+  <div class="themes-list">
+    <span *ngFor="let theme of usedThemes" class="theme-chip">
+      {{ theme }}
+    </span>
+  </div>
+</div>

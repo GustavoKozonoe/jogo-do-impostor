@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { GameLogicComponent } from './components/game-logic/game-logic.component';
 import { FormsModule } from '@angular/forms';
 import { GameType } from './interfaces/game-type.enum';
 import { ItoComponent } from './games/ito/ito.component';
+import { ImpostorGameComponent } from './games/impostor-game/impostor-game.component';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +14,9 @@ import { ItoComponent } from './games/ito/ito.component';
     CommonModule,
     RouterOutlet,
     ButtonModule,
-    GameLogicComponent,
     FormsModule,
     ItoComponent,
+    ImpostorGameComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass',
@@ -24,7 +24,7 @@ import { ItoComponent } from './games/ito/ito.component';
 export class AppComponent {
   title = 'Jogo do Impostor';
   isGameStarted = false;
-  players: string[] = [];
+  players: string[] = ['teste1', 'teste2', 'teste3'];
   playerName: string = '';
   type: GameType = GameType.None;
 

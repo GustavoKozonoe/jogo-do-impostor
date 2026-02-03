@@ -11,6 +11,10 @@
   align-items: center;
 }
 
+.card-container {
+  width: 50%;
+}
+
 @media (max-width: 576px) {
   .app-content {
     align-items: flex-start;

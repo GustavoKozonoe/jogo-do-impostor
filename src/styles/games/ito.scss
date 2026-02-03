@@ -14,27 +14,6 @@
     margin-bottom: 10px;
   }
 
-  .used-themes {
-    max-width: 380px;
-    text-align: center;
-  } 
-
-  .themes-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    justify-content: center;
-  }
-
-  .theme-chip {
-    background: rgba(15, 23, 42, 0.2);
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 0.7rem;
-    color: #0f172a;
-    font-weight: 500;
-  }
-
   .controls {
     width: 100%;
     max-width: 380px;

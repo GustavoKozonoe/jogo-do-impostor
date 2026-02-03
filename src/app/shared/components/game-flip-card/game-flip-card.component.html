@@ -1,0 +1,16 @@
+<div class="flip-wrapper">
+  <div
+    class="flip-card"
+    [class.flipped]="isRevealed"
+    (touchstart)="onTouchStart($event)"
+    (touchend)="onTouchEnd($event)"
+  >
+    <div class="flip-face flip-front">
+      <ng-content select="[front]"></ng-content>
+    </div>
+
+    <div class="flip-face flip-back" [ngClass]="backClass">
+      <ng-content select="[back]"></ng-content>
+    </div>
+  </div>
+</div>
