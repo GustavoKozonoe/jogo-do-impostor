@@ -1,11 +1,11 @@
-/* Icon Menu */
 .menu-icon {
   max-width: 300px;
+  width: 100%;
+  height: auto;
   opacity: 0.95;
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
 }
 
-/* Icon Jogo */
 .icon-lg {
   width: 30px;
   height: 30px;
@@ -17,4 +17,10 @@
   margin-right: 6px;
   margin-bottom: 2px;
   vertical-align: middle;
+}
+
+@media (max-width: 576px) {
+  .menu-icon {
+    max-width: 180px;
+  }
 }
