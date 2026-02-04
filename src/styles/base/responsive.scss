@@ -9,3 +9,9 @@
     padding-top: 2rem;
   }
 }
+
+@media (max-width: 768px) {
+  .ito-container {
+    padding: 0;
+  }
+}
