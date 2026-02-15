@@ -1,14 +1,16 @@
 .app-wrapper {
-  min-height: 100dvh;
-  overflow: hidden;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .app-content {
   flex: 1;
   display: flex;
+  justify-content: center;
   align-items: center;
+  overflow-y: auto;
 }
 
 .card-container {
@@ -19,5 +21,9 @@
   .app-content {
     align-items: flex-start;
     padding-top: 2rem;
+  }
+
+  .card-container {
+    width: 90%;
   }
 }

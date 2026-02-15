@@ -3,22 +3,15 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
   overscroll-behavior: none;
   touch-action: manipulation;
 }
 
 body {
-  margin: 0;
-  min-height: 110dvh;
-  width: 100%;
   background: radial-gradient(circle at top, #6e8caa, #cbd5ff);
   color: #f8fafc;
   font-family: system-ui, -apple-system, BlinkMacSystemFont;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
 }
 
 body.no-scroll {
@@ -29,4 +22,8 @@ body.no-scroll {
 button,
 .btn {
   min-height: 44px;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
 }
