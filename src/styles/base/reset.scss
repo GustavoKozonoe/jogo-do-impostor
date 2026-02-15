@@ -5,10 +5,10 @@ body {
   overflow-x: hidden;
   overscroll-behavior: none;
   touch-action: manipulation;
+  background: radial-gradient(circle at top, #6e8caa, #cbd5ff);
 }
 
 body {
-  background: radial-gradient(circle at top, #6e8caa, #cbd5ff);
   color: #f8fafc;
   font-family: system-ui, -apple-system, BlinkMacSystemFont;
 }
