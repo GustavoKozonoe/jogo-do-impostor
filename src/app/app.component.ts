@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -21,12 +21,32 @@ import { ImpostorGameComponent } from './games/impostor-game/impostor-game.compo
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Jogo do Impostor';
   isGameStarted = false;
   players: string[] = [];
   playerName: string = '';
   type: GameType = GameType.None;
+
+  ngOnInit() {
+    document.addEventListener(
+      'gesturestart',
+      function (e) {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
+
+    document.addEventListener(
+      'touchmove',
+      function (e: any) {
+        if (e.scale !== 1) {
+          e.preventDefault();
+        }
+      },
+      { passive: false }
+    );
+  }
 
   addPlayer() {
     this.players.push(this.playerName);
