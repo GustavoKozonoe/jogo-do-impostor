@@ -1,27 +1,49 @@
-# ImpostorGame
+# 🎭 Jogo do Impostor
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
+Aplicação web inspirada em jogos sociais de dedução e interação verbal, comuns em dinâmicas entre amigos, desenvolvida em Angular e hospedada na Azure.
 
-## Development server
+🔗 **Acesse online:**  
+https://icy-cliff-02a08af0f.2.azurestaticapps.net  
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## 🎮 Modos de Jogo
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 🕵️ Impostor Clássico
+Um jogador é o impostor e recebe um tema diferente dos demais jogadores.  
+Os jogadores devem conversar e tentar descobrir quem está com o tema errado.
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### ⚔️ Facções
+Existem dois temas diferentes na rodada.  
+Os jogadores precisam descobrir quem é o impostor em meio a duas facções.
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 🔢 ITO (In The Order)
+Cada jogador recebe um número secreto.  
+O grupo precisa se organizar na ordem correta sem revelar explicitamente seus números.
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🚀 Tecnologias Utilizadas
 
-## Further help
+- Angular
+- TypeScript
+- Bootstrap
+- Azure Static Web Apps
+- GitHub Actions (CI/CD)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+---
+
+## ☁️ Deploy e Cloud
+
+A aplicação está hospedada no **Azure Static Web Apps**, com:
+
+- ✅ Deploy automático via GitHub Actions
+- ✅ Ambiente de produção
+- ✅ HTTPS automático
+- ✅ CDN global
+
+Cada push na branch `main` dispara automaticamente o processo de build e publicação.
